@@ -17,6 +17,11 @@ The code parses these integers into events and enums.
 I am using the S2W format I created to simulate input in my games. The goal is to train on mini-games first, then switch to a real game and, eventually, a robot.
 
 
+* **Important Note:**
+* You don't want input in this tool to avoid a required dependency on another package.
+* You don't want the input package to have a dependency on this package because all projects don't need this package.
+* **Conclusion:** You need a third package to link both the Input and S2W packages.
+
 
 **Have a look at NES:** 
 - https://github.com/EloiStree/2026_01_18_gdp_nes_controller_udp
