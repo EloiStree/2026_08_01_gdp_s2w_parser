@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://bc1lqkd8ath1b"]
+
+[ext_resource type="Script" uid="uid://jgtw3mban7s5" path="res://addons/2026_08_01_gdp_s2w_parser/in/script/s2w_listen_thread_udp_byte.gd" id="1_wlwhq"]
+[ext_resource type="Script" uid="uid://ct8uei44m24i3" path="res://addons/2026_08_01_gdp_s2w_parser/in/script/s2w_fetch_get_local_ipv4.gd" id="2_0s3jf"]
+[ext_resource type="Script" uid="uid://u3r0kdwqgfjj" path="res://addons/2026_08_01_gdp_s2w_parser/in/scene/guid/demo_listen_to_char_input/script/s2w_node_integer_to_char.gd" id="2_je0co"]
+[ext_resource type="Script" uid="uid://1gmfbdtmwadk" path="res://addons/2026_08_01_gdp_s2w_parser/both/script/s2w_2d_input_line_to_integer.gd" id="4_1n0s2"]
+
+[sub_resource type="Environment" id="Environment_kqxq0"]
+ambient_light_color = Color(2.1658839e-06, 0.6059087, 0.38237497, 1)
+
+[node name="DemoListenToCharInput" type="Node3D" unique_id=18570142]
+
+[node name="S2WListenThreadUdpByte" type="Node" parent="." unique_id=1995286862]
+script = ExtResource("1_wlwhq")
+metadata/_custom_type_script = "uid://jgtw3mban7s5"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1335333238]
+
+[node name="Label Char" type="Label" parent="CanvasLayer" unique_id=1316299060]
+anchors_preset = -1
+anchor_left = 0.33802083
+anchor_top = 0.33055556
+anchor_right = 0.7024583
+anchor_bottom = 0.698
+offset_right = -1.7200012
+offset_bottom = 0.15997314
+theme_override_font_sizes/font_size = 70
+text = "%"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="S2WNodeIntegerToChar" type="Node" parent="CanvasLayer/Label Char" unique_id=1006327315]
+script = ExtResource("2_je0co")
+metadata/_custom_type_script = "uid://u3r0kdwqgfjj"
+
+[node name="Label Public IPV4" type="Label" parent="CanvasLayer" unique_id=381957340]
+anchors_preset = -1
+anchor_left = 0.39739582
+anchor_top = 0.8898148
+anchor_right = 0.9883958
+anchor_bottom = 0.97670376
+offset_right = -1.7200012
+offset_bottom = 0.15997314
+theme_override_font_sizes/font_size = 40
+text = "127.0.0.1"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="S2WFetchGetLocalIPv4" type="Node" parent="CanvasLayer/Label Public IPV4" unique_id=1903259397]
+script = ExtResource("2_0s3jf")
+metadata/_custom_type_script = "uid://ct8uei44m24i3"
+
+[node name="LineEdit" type="LineEdit" parent="CanvasLayer" unique_id=1833934846]
+anchors_preset = -1
+anchor_top = 0.93100005
+anchor_right = 0.374
+anchor_bottom = 1.0
+offset_left = 26.0
+offset_top = 0.5199585
+offset_right = -12.080017
+offset_bottom = -13.0
+
+[node name="S2W2DInputLineToInteger" type="Node" parent="CanvasLayer/LineEdit" unique_id=1751032377 node_paths=PackedStringArray("_line_editor")]
+script = ExtResource("4_1n0s2")
+_line_editor = NodePath("..")
+metadata/_custom_type_script = "uid://1gmfbdtmwadk"
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1025094446]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.4538945)
+environment = SubResource("Environment_kqxq0")
+
+[connection signal="on_char_found" from="CanvasLayer/Label Char/S2WNodeIntegerToChar" to="CanvasLayer/Label Char" method="set_text"]
+[connection signal="on_ipv4_list_joined_updated" from="CanvasLayer/Label Public IPV4/S2WFetchGetLocalIPv4" to="CanvasLayer/Label Public IPV4" method="set_text"]
+[connection signal="on_integer_found" from="CanvasLayer/LineEdit/S2W2DInputLineToInteger" to="CanvasLayer/Label Char/S2WNodeIntegerToChar" method="emit_char_if_found_from_integer"]
