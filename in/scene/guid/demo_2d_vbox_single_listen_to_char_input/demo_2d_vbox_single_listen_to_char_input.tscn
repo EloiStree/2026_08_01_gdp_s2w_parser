@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://bc1lqkd8ath1b"]
+
+[ext_resource type="Script" uid="uid://dpuni5wuoebkb" path="res://addons/2026_08_01_gdp_s2w_parser/in/scene/guid/demo_2d_vbox_single_listen_to_char_input/script/s2w_node_integer_to_char.gd" id="1_jchca"]
+[ext_resource type="PackedScene" uid="uid://djv3wctlvcv6i" path="res://addons/2026_08_01_gdp_s2w_parser/in/scene/guid/demo_2d_vbox_text_to_int_mini_interpreter/prefab_text_edit_to_int_command.tscn" id="2_5m5wa"]
+
+[node name="DemoListenToCharInput" type="Panel" unique_id=1247166448]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="S2WNodeIntegerToChar" type="Node" parent="." unique_id=975048436 node_paths=PackedStringArray("_debug_label")]
+script = ExtResource("1_jchca")
+_debug_label = [NodePath("../VBoxContainer/Label Char Received Formated")]
+metadata/_custom_type_script = "uid://u3r0kdwqgfjj"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=738414367]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PrefabTextEditToIntCommand" parent="VBoxContainer" unique_id=681057288 instance=ExtResource("2_5m5wa")]
+layout_mode = 2
+
+[node name="TextEdit" parent="VBoxContainer/PrefabTextEditToIntCommand" index="0" unique_id=2114537710]
+text = "4055 1000> 4056 1000> 4121 1000> 4102 1000> 4253   1000> 4244  1000> 4235"
+
+[node name="Label Char Title" type="Label" parent="VBoxContainer" unique_id=1316299060]
+layout_mode = 2
+text = "UTF-8 Characters"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Label Char Range" type="Label" parent="VBoxContainer" unique_id=1148898053]
+layout_mode = 2
+text = "4032 -4255"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Label Char Received Char" type="Label" parent="VBoxContainer" unique_id=121898446]
+layout_mode = 2
+text = "%"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Label Char Received Formated" type="Label" parent="VBoxContainer" unique_id=2147285964]
+layout_mode = 2
+text = "%"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[connection signal="on_char_found" from="S2WNodeIntegerToChar" to="VBoxContainer/Label Char Received Char" method="set_text"]
+[connection signal="on_integer_submitted" from="VBoxContainer/PrefabTextEditToIntCommand/S2W2DInputMiniTextIntInterpreter" to="S2WNodeIntegerToChar" method="emit_char_if_found_from_integer"]
+
+[editable path="VBoxContainer/PrefabTextEditToIntCommand"]

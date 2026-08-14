@@ -1,0 +1,85 @@
+[gd_scene format=3 uid="uid://ca1a0k0pynadc"]
+
+[ext_resource type="Script" uid="uid://eraq0jkyw5rt" path="res://addons/2026_08_01_gdp_s2w_parser/in/scene/guid/demo_2d_vbox_single_listen_to_motor_float_8/s2w_listen_to_single_motors.gd" id="1_s6b1j"]
+[ext_resource type="PackedScene" uid="uid://djv3wctlvcv6i" path="res://addons/2026_08_01_gdp_s2w_parser/in/scene/guid/demo_2d_vbox_text_to_int_mini_interpreter/prefab_text_edit_to_int_command.tscn" id="1_sqdx1"]
+
+[node name="Demo2dVboxSingleListenToMotorFloat8" type="Control" unique_id=1001493617]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="S2WListenToSingleMotors" type="Node" parent="." unique_id=689774673 node_paths=PackedStringArray("_motors_as_slider")]
+script = ExtResource("1_s6b1j")
+_motors_as_slider = [NodePath("../VBoxContainer/HSlider Motor 1"), NodePath("../VBoxContainer/HSlider Motor 2"), NodePath("../VBoxContainer/HSlider Motor 3"), NodePath("../VBoxContainer/HSlider Motor 4"), NodePath("../VBoxContainer/HSlider Motor 5"), NodePath("../VBoxContainer/HSlider Motor 6"), NodePath("../VBoxContainer/HSlider Motor 7"), NodePath("../VBoxContainer/HSlider Motor 8")]
+metadata/_custom_type_script = "uid://eraq0jkyw5rt"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1694252427]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PrefabTextEditToIntCommand" parent="VBoxContainer" unique_id=681057288 instance=ExtResource("1_sqdx1")]
+layout_mode = 2
+
+[node name="TextEdit" parent="VBoxContainer/PrefabTextEditToIntCommand" index="0" unique_id=2114537710]
+text = "1612345678   2000> -1600099999  2000> -1600188888  2000> -1600255555  2000> -1600322222  2000> -1600477777  
+ 2000> -1650077777  "
+
+[node name="Label  Motor 1-8" type="Label" parent="VBoxContainer" unique_id=693038045]
+layout_mode = 2
+text = "Label  Motor 1-8"
+
+[node name="Label" type="Label" parent="VBoxContainer" unique_id=1063163578]
+layout_mode = 2
+text = "-"
+
+[node name="HSlider Motor 1" type="HSlider" parent="VBoxContainer" unique_id=1640531649]
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+
+[node name="HSlider Motor 2" type="HSlider" parent="VBoxContainer" unique_id=1916069161]
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+
+[node name="HSlider Motor 3" type="HSlider" parent="VBoxContainer" unique_id=601696996]
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+
+[node name="HSlider Motor 4" type="HSlider" parent="VBoxContainer" unique_id=894037658]
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+
+[node name="HSlider Motor 5" type="HSlider" parent="VBoxContainer" unique_id=1157673804]
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+
+[node name="HSlider Motor 6" type="HSlider" parent="VBoxContainer" unique_id=699692448]
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+
+[node name="HSlider Motor 7" type="HSlider" parent="VBoxContainer" unique_id=44196910]
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+
+[node name="HSlider Motor 8" type="HSlider" parent="VBoxContainer" unique_id=1020212187]
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+
+[connection signal="on_motor_1699988888_value_received_as_string" from="S2WListenToSingleMotors" to="VBoxContainer/Label" method="set_text"]
+[connection signal="on_integer_submitted" from="VBoxContainer/PrefabTextEditToIntCommand/S2W2DInputMiniTextIntInterpreter" to="S2WListenToSingleMotors" method="push_in_integer"]
+
+[editable path="VBoxContainer/PrefabTextEditToIntCommand"]

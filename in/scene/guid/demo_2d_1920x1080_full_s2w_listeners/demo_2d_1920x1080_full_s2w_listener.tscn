@@ -1,0 +1,101 @@
+[gd_scene format=3 uid="uid://bhxl0n8pkvq3e"]
+
+[ext_resource type="Script" uid="uid://06ple5dkkgx2" path="res://addons/2026_08_01_gdp_s2w_parser/in/scene/guid/demo_2d_vbox_single_listen_to_nes_controller/script/s2w_listen_to_single_nes.gd" id="1_b378k"]
+[ext_resource type="PackedScene" uid="uid://djv3wctlvcv6i" path="res://addons/2026_08_01_gdp_s2w_parser/in/scene/guid/demo_2d_vbox_text_to_int_mini_interpreter/prefab_text_edit_to_int_command.tscn" id="1_pb14y"]
+[ext_resource type="Script" uid="uid://bvcoafu6xxtyv" path="res://addons/2026_08_01_gdp_s2w_parser/in/script/s2w_ui_key_value_as_text.gd" id="3_bp1rk"]
+
+[node name="Demo2d1920x1080FullS2wListener" type="Control" unique_id=217094007]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel NES Global" type="Panel" parent="." unique_id=683110262]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="S2WListenToSingleNES" type="Node" parent="Panel NES Global" unique_id=2049313709]
+script = ExtResource("1_b378k")
+metadata/_custom_type_script = "uid://06ple5dkkgx2"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel NES Global" unique_id=413789466]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PrefabTextEditToIntCommand" parent="Panel NES Global/VBoxContainer" unique_id=681057288 instance=ExtResource("1_pb14y")]
+layout_mode = 2
+
+[node name="TextEdit" parent="Panel NES Global/VBoxContainer/PrefabTextEditToIntCommand" index="0" unique_id=2114537710]
+text = "1281 1000> 2281 500> 1282 1000> 2282 500> 1283 1000> 2283 500> 1284 1000> 2284 500> 1285 1000> 2285 500> 1286 1000> 2286 500> 1287 1000> 2287 500> 1288 1000> 2288 500>"
+
+[node name="Label" type="Label" parent="Panel NES Global/VBoxContainer" unique_id=326808355]
+layout_mode = 2
+text = "NES Input"
+
+[node name="Arrow Up 1281" type="CheckButton" parent="Panel NES Global/VBoxContainer" unique_id=1478229981]
+layout_mode = 2
+text = "Arrow Up 1281"
+
+[node name="Arrow Right 1282" type="CheckButton" parent="Panel NES Global/VBoxContainer" unique_id=1413910673]
+layout_mode = 2
+text = "Arrow Right 1282"
+
+[node name="Arrow Down 1283" type="CheckButton" parent="Panel NES Global/VBoxContainer" unique_id=344273994]
+layout_mode = 2
+text = "Arrow Down 1283"
+
+[node name="Arrow Left 1284" type="CheckButton" parent="Panel NES Global/VBoxContainer" unique_id=633867740]
+layout_mode = 2
+text = "Arrow Left 1284"
+
+[node name="Arrow Menu Left 1287" type="CheckButton" parent="Panel NES Global/VBoxContainer" unique_id=2041507860]
+layout_mode = 2
+text = "Arrow Menu Left 1287"
+
+[node name="Arrow Menu Right 1288" type="CheckButton" parent="Panel NES Global/VBoxContainer" unique_id=1003565055]
+layout_mode = 2
+text = "Arrow Menu Right 1288"
+
+[node name="Arrow Button A 1285" type="CheckButton" parent="Panel NES Global/VBoxContainer" unique_id=1215931310]
+layout_mode = 2
+text = "Arrow Button A 1285"
+
+[node name="Arrow Button B 1286" type="CheckButton" parent="Panel NES Global/VBoxContainer" unique_id=1687012468]
+layout_mode = 2
+text = "Arrow Button B 1286"
+
+[node name="Label Key Value" type="Label" parent="Panel NES Global/VBoxContainer" unique_id=903214691]
+layout_mode = 2
+
+[node name="S2WUIKeyValueAsText" type="Node" parent="Panel NES Global/VBoxContainer/Label Key Value" unique_id=1889881732 node_paths=PackedStringArray("_labels")]
+script = ExtResource("3_bp1rk")
+_labels = [NodePath("..")]
+metadata/_custom_type_script = "uid://bvcoafu6xxtyv"
+
+[node name="Panel NES 64" type="Panel" parent="." unique_id=2018221249]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[connection signal="on_nes_a_pressed_value" from="Panel NES Global/S2WListenToSingleNES" to="Panel NES Global/VBoxContainer/Arrow Button A 1285" method="set_pressed"]
+[connection signal="on_nes_arrow_down_pressed_value" from="Panel NES Global/S2WListenToSingleNES" to="Panel NES Global/VBoxContainer/Arrow Down 1283" method="set_pressed"]
+[connection signal="on_nes_arrow_left_pressed_value" from="Panel NES Global/S2WListenToSingleNES" to="Panel NES Global/VBoxContainer/Arrow Left 1284" method="set_pressed"]
+[connection signal="on_nes_arrow_right_pressed_value" from="Panel NES Global/S2WListenToSingleNES" to="Panel NES Global/VBoxContainer/Arrow Right 1282" method="set_pressed"]
+[connection signal="on_nes_arrow_up_pressed_value" from="Panel NES Global/S2WListenToSingleNES" to="Panel NES Global/VBoxContainer/Arrow Up 1281" method="set_pressed"]
+[connection signal="on_nes_as_text_input" from="Panel NES Global/S2WListenToSingleNES" to="Panel NES Global/VBoxContainer/Label Key Value/S2WUIKeyValueAsText" method="push_as_Key_boolean"]
+[connection signal="on_nes_b_pressed_value" from="Panel NES Global/S2WListenToSingleNES" to="Panel NES Global/VBoxContainer/Arrow Button B 1286" method="set_pressed"]
+[connection signal="on_nes_menu_left_pressed_value" from="Panel NES Global/S2WListenToSingleNES" to="Panel NES Global/VBoxContainer/Arrow Menu Left 1287" method="set_pressed"]
+[connection signal="on_nes_menu_right_pressed_value" from="Panel NES Global/S2WListenToSingleNES" to="Panel NES Global/VBoxContainer/Arrow Menu Right 1288" method="set_pressed"]
+[connection signal="on_integer_submitted" from="Panel NES Global/VBoxContainer/PrefabTextEditToIntCommand/S2W2DInputMiniTextIntInterpreter" to="Panel NES Global/S2WListenToSingleNES" method="push_in_integer"]
+
+[editable path="Panel NES Global/VBoxContainer/PrefabTextEditToIntCommand"]
