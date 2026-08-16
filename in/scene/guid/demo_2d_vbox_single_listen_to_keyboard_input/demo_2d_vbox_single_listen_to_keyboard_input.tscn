@@ -1,0 +1,108 @@
+[gd_scene format=3 uid="uid://c8uuay273oypg"]
+
+[ext_resource type="Script" uid="uid://bapyshmwxrxes" path="res://addons/2026_08_01_gdp_s2w_parser/in/scene/guid/demo_2d_vbox_single_listen_to_keyboard_input/s2w_listen_to_keyboard_int.gd" id="1_6af16"]
+[ext_resource type="Script" uid="uid://bvcoafu6xxtyv" path="res://addons/2026_08_01_gdp_s2w_parser/in/script/s2w_ui_key_value_as_text.gd" id="2_7br3e"]
+[ext_resource type="PackedScene" uid="uid://djv3wctlvcv6i" path="res://addons/2026_08_01_gdp_s2w_parser/in/scene/guid/demo_2d_vbox_text_to_int_mini_interpreter/prefab_text_edit_to_int_command.tscn" id="2_8l0qq"]
+[ext_resource type="Script" uid="uid://dlehlhaw47r78" path="res://addons/2026_08_01_gdp_s2w_parser/in/scene/guid/demo_2d_vbox_interger_to_action_trigger/script/s2w_resource_integer_to_text_bool_action.gd" id="2_j7ybu"]
+
+[sub_resource type="Resource" id="Resource_8l0qq"]
+script = ExtResource("2_j7ybu")
+metadata/_custom_type_script = "uid://dlehlhaw47r78"
+
+[node name="Demo2dVboxSingleListenToKeyboardInput" type="Control" unique_id=897703474]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="S2WListenToKeyboardInt" type="Node" parent="." unique_id=40074423]
+script = ExtResource("1_6af16")
+_link_integer_to_text_action = SubResource("Resource_8l0qq")
+metadata/_custom_type_script = "uid://bapyshmwxrxes"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=477412389]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PrefabTextEditToIntCommand" parent="VBoxContainer" unique_id=681057288 instance=ExtResource("2_8l0qq")]
+layout_mode = 2
+
+[node name="TextEdit" parent="VBoxContainer/PrefabTextEditToIntCommand" index="0" unique_id=2114537710]
+text = "1000> 1008  1000>  2008 1000> 1009  1000>  2009 1000>
+"
+
+[node name="Label Integer Received Title" type="Label" parent="VBoxContainer" unique_id=2125833276]
+layout_mode = 2
+text = "Int Received"
+
+[node name="Label Integer Received Value" type="Label" parent="VBoxContainer" unique_id=1430688752]
+layout_mode = 2
+
+[node name="Label Action Title2" type="Label" parent="VBoxContainer" unique_id=1647462527]
+layout_mode = 2
+text = "Trigger Action"
+
+[node name="Label Action Value2" type="Label" parent="VBoxContainer" unique_id=440409408]
+layout_mode = 2
+
+[node name="Label Action Bool Tittle" type="Label" parent="VBoxContainer" unique_id=1458493773]
+layout_mode = 2
+text = "Boolean Trigger Action"
+
+[node name="Label Action Bool  Value" type="Label" parent="VBoxContainer" unique_id=395563345]
+layout_mode = 2
+
+[node name="S2WUIKeyValueAsText" type="Node" parent="VBoxContainer/Label Action Bool  Value" unique_id=721955877 node_paths=PackedStringArray("_labels")]
+script = ExtResource("2_7br3e")
+_labels = [NodePath("..")]
+metadata/_custom_type_script = "uid://bvcoafu6xxtyv"
+
+[node name="CheckBox Tab" type="CheckBox" parent="VBoxContainer" unique_id=2113163072]
+layout_mode = 2
+text = "Tab"
+
+[node name="CheckBox Shift" type="CheckBox" parent="VBoxContainer" unique_id=1103433093]
+layout_mode = 2
+text = "Shift"
+
+[node name="CheckBox Ctrl" type="CheckBox" parent="VBoxContainer" unique_id=491454734]
+layout_mode = 2
+text = "Ctrl"
+
+[node name="CheckBox Alt" type="CheckBox" parent="VBoxContainer" unique_id=1549594651]
+layout_mode = 2
+text = "Alt"
+
+[node name="CheckBox Space" type="CheckBox" parent="VBoxContainer" unique_id=1281433941]
+layout_mode = 2
+text = "Space"
+
+[node name="CheckBox Enter" type="CheckBox" parent="VBoxContainer" unique_id=344048732]
+layout_mode = 2
+text = "Enter"
+
+[node name="CheckBox Backspace" type="CheckBox" parent="VBoxContainer" unique_id=1936717463]
+layout_mode = 2
+text = "Backspace"
+
+[node name="CheckBox Escape" type="CheckBox" parent="VBoxContainer" unique_id=1372409454]
+layout_mode = 2
+text = "Escape"
+
+[connection signal="on_any_integer_received_as_string" from="S2WListenToKeyboardInt" to="VBoxContainer/Label Integer Received Value" method="set_text"]
+[connection signal="on_main_backspace_key_event" from="S2WListenToKeyboardInt" to="VBoxContainer/CheckBox Backspace" method="set_pressed"]
+[connection signal="on_main_space_key_event" from="S2WListenToKeyboardInt" to="VBoxContainer/CheckBox Space" method="set_pressed"]
+[connection signal="on_main_tab_key_event" from="S2WListenToKeyboardInt" to="VBoxContainer/CheckBox Tab" method="set_pressed"]
+[connection signal="on_triggered_action_found" from="S2WListenToKeyboardInt" to="VBoxContainer/Label Action Value2" method="set_text"]
+[connection signal="on_triggered_value_action_found" from="S2WListenToKeyboardInt" to="VBoxContainer/Label Action Bool  Value/S2WUIKeyValueAsText" method="push_as_Key_boolean"]
+[connection signal="on_integer_submitted" from="VBoxContainer/PrefabTextEditToIntCommand/S2W2DInputMiniTextIntInterpreter" to="S2WListenToKeyboardInt" method="push_in_integer"]
+
+[editable path="VBoxContainer/PrefabTextEditToIntCommand"]

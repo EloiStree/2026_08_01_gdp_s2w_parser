@@ -1,0 +1,89 @@
+[gd_scene format=3 uid="uid://cv5kivdwp2rga"]
+
+[ext_resource type="Script" uid="uid://06ple5dkkgx2" path="res://addons/2026_08_01_gdp_s2w_parser/in/scene/guid/demo_2d_vbox_single_listen_to_nes_controller/script/s2w_listen_to_single_nes.gd" id="1_ntwvt"]
+[ext_resource type="PackedScene" uid="uid://djv3wctlvcv6i" path="res://addons/2026_08_01_gdp_s2w_parser/in/scene/guid/demo_2d_vbox_text_to_int_mini_interpreter/prefab_text_edit_to_int_command.tscn" id="2_k4pgy"]
+[ext_resource type="Script" uid="uid://bvcoafu6xxtyv" path="res://addons/2026_08_01_gdp_s2w_parser/in/script/s2w_ui_key_value_as_text.gd" id="3_37sf2"]
+
+[node name="Panel NES Global" type="Panel" unique_id=1841095601]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="S2WListenToSingleNES" type="Node" parent="." unique_id=409795200]
+script = ExtResource("1_ntwvt")
+metadata/_custom_type_script = "uid://06ple5dkkgx2"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=568115402]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PrefabTextEditToIntCommand" parent="VBoxContainer" unique_id=681057288 instance=ExtResource("2_k4pgy")]
+layout_mode = 2
+
+[node name="TextEdit" parent="VBoxContainer/PrefabTextEditToIntCommand" index="0" unique_id=2114537710]
+text = "1281 1000> 2281 500> 1282 1000> 2282 500> 1283 1000> 2283 500> 1284 1000> 2284 500> 1285 1000> 2285 500> 1286 1000> 2286 500> 1287 1000> 2287 500> 1288 1000> 2288 500>"
+
+[node name="Label" type="Label" parent="VBoxContainer" unique_id=1700171428]
+layout_mode = 2
+text = "NES Input"
+
+[node name="Arrow Up 1281" type="CheckButton" parent="VBoxContainer" unique_id=966273514]
+layout_mode = 2
+text = "Arrow Up 1281"
+
+[node name="Arrow Right 1282" type="CheckButton" parent="VBoxContainer" unique_id=1234707651]
+layout_mode = 2
+text = "Arrow Right 1282"
+
+[node name="Arrow Down 1283" type="CheckButton" parent="VBoxContainer" unique_id=1445939764]
+layout_mode = 2
+text = "Arrow Down 1283"
+
+[node name="Arrow Left 1284" type="CheckButton" parent="VBoxContainer" unique_id=1595163803]
+layout_mode = 2
+text = "Arrow Left 1284"
+
+[node name="Arrow Menu Left 1287" type="CheckButton" parent="VBoxContainer" unique_id=1752064322]
+layout_mode = 2
+text = "Arrow Menu Left 1287"
+
+[node name="Arrow Menu Right 1288" type="CheckButton" parent="VBoxContainer" unique_id=1791959167]
+layout_mode = 2
+text = "Arrow Menu Right 1288"
+
+[node name="Arrow Button A 1285" type="CheckButton" parent="VBoxContainer" unique_id=550053613]
+layout_mode = 2
+text = "Arrow Button A 1285"
+
+[node name="Arrow Button B 1286" type="CheckButton" parent="VBoxContainer" unique_id=1604281485]
+layout_mode = 2
+text = "Arrow Button B 1286"
+
+[node name="Label Key Value" type="Label" parent="VBoxContainer" unique_id=17510466]
+layout_mode = 2
+
+[node name="S2WUIKeyValueAsText" type="Node" parent="VBoxContainer/Label Key Value" unique_id=830236413 node_paths=PackedStringArray("_labels")]
+script = ExtResource("3_37sf2")
+_labels = [NodePath("..")]
+metadata/_custom_type_script = "uid://bvcoafu6xxtyv"
+
+[connection signal="on_nes_a_pressed_value" from="S2WListenToSingleNES" to="VBoxContainer/Arrow Button A 1285" method="set_pressed"]
+[connection signal="on_nes_arrow_down_pressed_value" from="S2WListenToSingleNES" to="VBoxContainer/Arrow Down 1283" method="set_pressed"]
+[connection signal="on_nes_arrow_left_pressed_value" from="S2WListenToSingleNES" to="VBoxContainer/Arrow Left 1284" method="set_pressed"]
+[connection signal="on_nes_arrow_right_pressed_value" from="S2WListenToSingleNES" to="VBoxContainer/Arrow Right 1282" method="set_pressed"]
+[connection signal="on_nes_arrow_up_pressed_value" from="S2WListenToSingleNES" to="VBoxContainer/Arrow Up 1281" method="set_pressed"]
+[connection signal="on_nes_as_text_input" from="S2WListenToSingleNES" to="VBoxContainer/Label Key Value/S2WUIKeyValueAsText" method="push_as_Key_boolean"]
+[connection signal="on_nes_b_pressed_value" from="S2WListenToSingleNES" to="VBoxContainer/Arrow Button B 1286" method="set_pressed"]
+[connection signal="on_nes_menu_left_pressed_value" from="S2WListenToSingleNES" to="VBoxContainer/Arrow Menu Left 1287" method="set_pressed"]
+[connection signal="on_nes_menu_right_pressed_value" from="S2WListenToSingleNES" to="VBoxContainer/Arrow Menu Right 1288" method="set_pressed"]
+[connection signal="on_integer_submitted" from="VBoxContainer/PrefabTextEditToIntCommand/S2W2DInputMiniTextIntInterpreter" to="S2WListenToSingleNES" method="push_in_integer"]
+
+[editable path="VBoxContainer/PrefabTextEditToIntCommand"]
