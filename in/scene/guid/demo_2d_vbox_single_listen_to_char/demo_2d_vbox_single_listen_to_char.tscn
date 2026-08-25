@@ -1,7 +1,35 @@
 [gd_scene format=3 uid="uid://bc1lqkd8ath1b"]
 
-[ext_resource type="Script" uid="uid://dpuni5wuoebkb" path="res://addons/2026_08_01_gdp_s2w_parser/in/scene/guid/demo_2d_vbox_single_listen_to_char_input/script/s2w_node_integer_to_char.gd" id="1_jchca"]
-[ext_resource type="PackedScene" uid="uid://djv3wctlvcv6i" path="res://addons/2026_08_01_gdp_s2w_parser/in/scene/guid/demo_2d_vbox_text_to_int_mini_interpreter/prefab_text_edit_to_int_command.tscn" id="2_5m5wa"]
+[ext_resource type="PackedScene" uid="uid://djv3wctlvcv6i" path="res://addons/2026_08_01_gdp_s2w_parser/in/scene/guid/demo_2d_vbox_text_to_int_mini_interpreter/prefab_text_edit_to_int_command.tscn" id="1_nplfd"]
+
+[sub_resource type="GDScript" id="GDScript_dqyqu"]
+script/source = "class_name S2WListenToCharAsInteger
+extends Node
+
+signal on_char_found(char:String)
+signal on_char_as_formated_string(format_string:String)
+signal on_last_integer_not_valide()
+
+@export var _last_received_integer:int
+@export var _last_received_char:String
+@export var _debug_label:Array[Label] = []
+@export var _format_string:String = \"Integer: %d, Char: %s\"
+
+func emit_char_if_found_from_integer(integer:int)->void:
+	_last_received_integer = integer	
+	_last_received_char = S2WStaticIntegerToChar.get_char_from_integer(integer)
+	if _last_received_char != \"\":
+		on_char_found.emit(_last_received_char)
+	else:
+		on_last_integer_not_valide.emit()
+
+	for label in _debug_label:
+		if label != null:
+			label.text = _format_string % [integer, _last_received_char]
+			on_char_as_formated_string.emit(label.text)
+	var t:String= _format_string % [integer, _last_received_char]
+	on_char_as_formated_string.emit(t)
+"
 
 [node name="DemoListenToCharInput" type="Panel" unique_id=1247166448]
 anchors_preset = 15
@@ -10,10 +38,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="S2WNodeIntegerToChar" type="Node" parent="." unique_id=975048436 node_paths=PackedStringArray("_debug_label")]
-script = ExtResource("1_jchca")
-_debug_label = [NodePath("../VBoxContainer/Label Char Received Formated")]
-metadata/_custom_type_script = "uid://u3r0kdwqgfjj"
+[node name="S2WNodeIntegerToChar" type="Node" parent="." unique_id=1249638058]
+script = SubResource("GDScript_dqyqu")
+metadata/_custom_type_script = "uid://dhqc3ag6n58dv"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=738414367]
 layout_mode = 1
@@ -23,7 +50,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PrefabTextEditToIntCommand" parent="VBoxContainer" unique_id=681057288 instance=ExtResource("2_5m5wa")]
+[node name="PrefabTextEditToIntCommand" parent="VBoxContainer" unique_id=681057288 instance=ExtResource("1_nplfd")]
 layout_mode = 2
 
 [node name="TextEdit" parent="VBoxContainer/PrefabTextEditToIntCommand" index="0" unique_id=2114537710]
@@ -56,8 +83,5 @@ text = "%"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
-
-[connection signal="on_char_found" from="S2WNodeIntegerToChar" to="VBoxContainer/Label Char Received Char" method="set_text"]
-[connection signal="on_integer_submitted" from="VBoxContainer/PrefabTextEditToIntCommand/S2W2DInputMiniTextIntInterpreter" to="S2WNodeIntegerToChar" method="emit_char_if_found_from_integer"]
 
 [editable path="VBoxContainer/PrefabTextEditToIntCommand"]
